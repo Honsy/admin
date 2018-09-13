@@ -24,8 +24,13 @@ def create_app(config_name):
     # 书签 蓝本
     from .bookmark import bookmark as  bm_blueprint
     from .bookmark.auth import bookmarkauth as  bmauth_blueprint
+    from .bookmark.business import bmbusiness as  bmbusiness_blueprint
+    from .bookmark.bm import bm as  bm_blueprint
+
     app.register_blueprint(bm_blueprint,url_prefix = '/bookmark')
     app.register_blueprint(bmauth_blueprint,url_prefix = '/bookmark/auth')
+    app.register_blueprint(bmbusiness_blueprint,url_prefix = '/bookmark/business')
+    app.register_blueprint(bm_blueprint,url_prefix = '/bookmark/bm')
 
     # 简单记事 藍本
     from .jdjs import jdjs as  jdjs_blueprint
