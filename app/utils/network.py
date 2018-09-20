@@ -13,7 +13,6 @@ HttpParamsError = 401 #客户端参数错误
 HttpVailateError = 402 #服务端校验错误
 
 
-
 class Network():
     # 响应码
     def responseCode(code,data,message):
