@@ -37,4 +37,39 @@ def addCategory():
     category = ToolCategory(categoryname=request.json['categoryname'],color=request.json['color'])
     db.session.add(category)
     db.session.commit()
-    return utils.network.Network.responseCode(utils.network.HttpSuccess, None, '添加成功')
+    return utils.network.Network.responseCode(utils.network.HttpSuccess, {'category':category.as_dict()}, '添加成功')
+
+
+# 修改工具分类
+@yshoog.route('/toolcategory/update', methods=['POST'])
+def updateCategory():
+    if 'id' not in request.json :
+        return utils.network.Network.responseCode(utils.network.HttpParamsError, None, '参数错误')
+
+    if request.json['categoryname'] is None:
+        return utils.network.Network.responseCode(utils.network.HttpParamsError, None, '名称不能为空')
+
+    oldcategory = ToolCategory.query.filter_by(categoryname=request.json['id']).first()
+    if oldcategory is None:
+        return utils.network.Network.responseCode(utils.network.HttpVailateError,None,'该分类不存在，请检查数据正确性！')
+
+    oldcategory.categoryname = request.json['categoryname']
+    oldcategory.color = request.json['color']
+    db.session.commit()
+
+    return ''
+
+
+# 刪除工具分类
+@yshoog.route('/toolcategory/del',methods = ['POST'])
+def delCategory():
+    if 'id' not in request.json :
+        return utils.network.Network.responseCode(utils.network.HttpParamsError, None, '参数错误')
+
+    oldcategory = ToolCategory.query.filter_by(id=request.json['id']).first()
+
+    if oldcategory is None:
+        return utils.network.Network.responseCode(utils.network.HttpVailateError,None,'该分类不存在，请检查数据正确性！')
+    db.session.delete(oldcategory)
+    db.session.commit()
+    return utils.network.Network.responseCode(utils.network.HttpSuccess, None, '删除成功')
