@@ -73,3 +73,5 @@ def delCategory():
     db.session.delete(oldcategory)
     db.session.commit()
     return utils.network.Network.responseCode(utils.network.HttpSuccess, None, '删除成功')
+
+# 添加工具

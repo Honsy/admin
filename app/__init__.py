@@ -12,7 +12,7 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../static', static_url_path='/static')
     # 处理跨域请求
     CORS(app, supports_credentials=True)
 
@@ -48,5 +48,10 @@ def create_app(config_name):
     # 后台用户相关蓝图
     app.register_blueprint(backuser_blueprint,url_prefix = '/back/user')
     app.register_blueprint(yshoog_blueprint,url_prefix = '/back/yshoog')
+    # 公共接口蓝图
+    from .common import common as common_blueprint
+    app.register_blueprint(common_blueprint,url_prefix = '/back')
+
+    print(app.url_map)
 
     return app
