@@ -52,3 +52,31 @@ class ToolCategory(db.Model):
         #上面的有缺陷，表字段和属性不一致会有问题
         return dict((col.name, getattr(obj, col.name)) \
                     for col in class_mapper(obj.__class__).mapped_table.c)
+
+# 工具类别
+class Tool(db.Model):
+    __tablename__ = 'tools'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128),unique=True,nullable=False)
+    icon = db.Column(db.String(128),unique=False,nullable=True)
+    href = db.Column(db.String(128),unique=True)
+    subtitle = db.Column(db.String(128),unique=True)
+    categoryid = db.Column(db.Integer)
+
+    def as_dict(obj):
+        # return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        #上面的有缺陷，表字段和属性不一致会有问题
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+# 关键词
+class Word(db.Model):
+    __tablename__ = 'words'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128),unique=True,nullable=False)
+    def as_dict(obj):
+        # return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        #上面的有缺陷，表字段和属性不一致会有问题
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+

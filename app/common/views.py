@@ -12,6 +12,9 @@ from config import Config
 @common.route('/img/upload', methods =['post'])
 def uploadImg():
     img = request.files.get('file')
+    print(request.files)
+
+    print(img)
     path = Config.basedir+"/static/img/"
     print(path)
     # 如果路径不存在

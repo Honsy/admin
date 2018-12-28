@@ -31,12 +31,17 @@ def create_app(config_name):
     app.register_blueprint(bmauth_blueprint,url_prefix = '/bookmark/auth')
     app.register_blueprint(bmbusiness_blueprint,url_prefix = '/bookmark/business')
     app.register_blueprint(bm_blueprint,url_prefix = '/bookmark/bm')
-
     # 简单记事 藍本
     from .jdjs import jdjs as  jdjs_blueprint
     from .jdjs.auth import jdjsauth as  jdjs_blueprint
     # 前台认证相关蓝图
     app.register_blueprint(jdjs_blueprint,url_prefix = '/jdjs/auth')
+    # 前台蓝图
+    from .front import front as front_blueprint
+    app.register_blueprint(front_blueprint,url_prefix = '/front')
+    # 小程序蓝图
+    from .wxapp import wxapp as wxapp_blueprint
+    app.register_blueprint(wxapp_blueprint,url_prefix = '/wxapp')
     # 后台蓝图
     from .back import back as  back_blueprint
     from .back.auth import backauth as  backauth_blueprint
@@ -52,6 +57,6 @@ def create_app(config_name):
     from .common import common as common_blueprint
     app.register_blueprint(common_blueprint,url_prefix = '/back')
 
-    print(app.url_map)
+    app.run(host='192.168.0.31', port=5000)
 
     return app
